@@ -2,14 +2,14 @@ unique_name: TPCDS - Composite
 object_type: composite_model
 label: TPCDS - Composite
 models: 
-    - TPC-DS Catalog Sales
-    - TPC-DS Inventory
-    - TPC-DS Store Promotion
-    - TPC-DS Store Returns
-    - TPC-DS Store Sales
-    - TPC-DS Web Sales
-metric_calc:
+  - TPC-DS Catalog Sales
+  - TPC-DS Inventory
+  - TPC-DS Store Promotion
+  - TPC-DS Store Returns
+  - TPC-DS Store Sales
+  - TPC-DS Web Sales
 
+metric_calc:
   - unique_name: Store and Web Purchased Amount
     folder: Time Relative
   - unique_name: Catalog Purchased Amount Growth
