@@ -8,3 +8,11 @@ models:
     - TPC-DS Store Returns
     - TPC-DS Store Sales
     - TPC-DS Web Sales
+metric_calc:
+
+  - unique_name: Store and Web Purchased Amount
+    folder: Time Relative
+  - unique_name: Catalog Purchased Amount Growth
+    folder: Time Relative
+  - unique_name: m_ws_cs_ext_sales_price_sum
+    folder: Time Relative
