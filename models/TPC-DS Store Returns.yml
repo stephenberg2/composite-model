@@ -1,0 +1,100 @@
+unique_name: TPC-DS Store Returns
+object_type: model
+label: TPC-DS Store Returns
+dimensions:
+  - Returns_Time_Tier
+include_default_drillthrough: true
+metrics:
+  - unique_name: m_returns_count_sum
+    folder: Store Sales Measures
+partitions:
+  - unique_name: TPC-DS Benchmark Model.Date Dimension - TPC-DS.Calendar Year.partition
+    attribute: Calendar Year
+    dimension: Date Dimension - TPC-DS
+    relationships_path:
+      - store_sales_Date_Dimension_Sold_1
+    type: key
+  - unique_name: >-
+      TPC-DS Benchmark Model.Date Dimension - TPC-DS.Calendar
+      Year-Week.partition
+    attribute: Calendar Year-Week
+    dimension: Date Dimension - TPC-DS
+    relationships_path:
+      - store_sales_Date_Dimension_Sold
+    type: key
+relationships:
+  - unique_name: store_returns_Store_Dimension
+    from:
+      dataset: store_returns
+      join_columns:
+        - sr_store_sk
+    to:
+      dimension: Store Dimension
+      level: Store Dimension
+  - unique_name: store_returns_Date_Dimension_Return
+    from:
+      dataset: store_returns
+      join_columns:
+        - sr_returned_date_sk
+    role_play: Return {0}
+    to:
+      dimension: Date Dimension - TPC-DS
+      level: Date Week Hierarchy - TPC-DS
+  - unique_name: store_returns_Time_Dimension_Return
+    from:
+      dataset: store_returns
+      join_columns:
+        - sr_return_time_sk
+    role_play: Return {0}
+    to:
+      dimension: Time Dimension
+      level: Time
+  - unique_name: store_returns_Customer_Address
+    from:
+      dataset: store_returns
+      join_columns:
+        - sr_addr_sk
+    to:
+      dimension: Customer Address
+      level: Customer Address
+  - unique_name: store_returns_Date_Dimension_Return_1
+    from:
+      dataset: store_returns
+      join_columns:
+        - sr_returned_date_sk
+    role_play: Return {0}
+    to:
+      dimension: Date Dimension - TPC-DS
+      level: Time Dimension
+  - unique_name: store_returns_Customer_Demographics
+    from:
+      dataset: store_returns
+      join_columns:
+        - sr_cdemo_sk
+    to:
+      dimension: Customer Demographics
+      level: Customer Demographics
+  - unique_name: store_returns_Household_Demographics
+    from:
+      dataset: store_returns
+      join_columns:
+        - sr_hdemo_sk
+    to:
+      dimension: Household Demographics
+      level: Household Demographics
+  - unique_name: store_returns_Customer_Dimension
+    from:
+      dataset: store_returns
+      join_columns:
+        - sr_customer_sk
+    to:
+      dimension: Customer Dimension - TPC-DS
+      level: Customer Dimension - TPC-DS
+  - unique_name: store_returns_Product_Dimension
+    from:
+      dataset: store_returns
+      join_columns:
+        - sr_item_sk
+    to:
+      dimension: Product Dimension - TPC-DS
+      level: Product Dimension - TPC-DS

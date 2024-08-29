@@ -1,0 +1,174 @@
+unique_name: TPC-DS Web Sales
+object_type: model
+label: TPC-DS Web Sales
+dimensions: []
+include_default_drillthrough: true
+metrics:
+  - unique_name: m_purchased_amount_on_web
+    folder: Web Sales Measures
+  - unique_name: m_web_sales_net_paid
+    folder: Web Sales Measures
+  - unique_name: m_web_sales_sum
+    folder: Web Sales Measures
+  - unique_name: m_ws row counter_sum
+    folder: Web Sales Measures
+  - unique_name: m_ws_ext_discount_amt_sum
+    folder: Web Sales Measures
+  - unique_name: m_ws_ext_list_price_sum
+    folder: Web Sales Measures
+  - unique_name: m_ws_ext_sales_price_sum
+    folder: Web Sales Measures
+  - unique_name: m_ws_ext_ship_cost_sum
+    folder: Web Sales Measures
+  - unique_name: m_ws_ext_tax_sum
+    folder: Web Sales Measures
+  - unique_name: m_ws_ext_wholesale_cost_sum
+    folder: Web Sales Measures
+  - unique_name: m_ws_net_paid_inc_ship_sum
+    folder: Web Sales Measures
+  - unique_name: m_ws_net_paid_inc_ship_tax_sum
+    folder: Web Sales Measures
+  - unique_name: m_ws_net_paid_inc_tax_sum
+    folder: Web Sales Measures
+  - unique_name: m_ws_net_paid_sum
+    folder: Web Sales Measures
+  - unique_name: m_ws_net_profit_sum
+    folder: Web Sales Measures
+  - unique_name: m_ws_quantity_sum
+    folder: Web Sales Measures
+  - unique_name: Web Sales Increase
+    folder: Web Sales Measures
+partitions:
+  - unique_name: TPC-DS Benchmark Model.Date Dimension - TPC-DS.Calendar Year.partition
+    attribute: Calendar Year
+    dimension: Date Dimension - TPC-DS
+    relationships_path:
+      - store_sales_Date_Dimension_Sold_1
+    type: key
+  - unique_name: >-
+      TPC-DS Benchmark Model.Date Dimension - TPC-DS.Calendar
+      Year-Week.partition
+    attribute: Calendar Year-Week
+    dimension: Date Dimension - TPC-DS
+    relationships_path:
+      - store_sales_Date_Dimension_Sold
+    type: key
+relationships:
+  - unique_name: web_sales_Date_Dimension_Sold
+    from:
+      dataset: web_sales
+      join_columns:
+        - ws_sold_date_sk
+    role_play: Sold {0}
+    to:
+      dimension: Date Dimension - TPC-DS
+      level: Date Week Hierarchy - TPC-DS
+  - unique_name: web_sales_Date_Dimension_Ship
+    from:
+      dataset: web_sales
+      join_columns:
+        - ws_ship_date_sk
+    role_play: Ship {0}
+    to:
+      dimension: Date Dimension - TPC-DS
+      level: Date Week Hierarchy - TPC-DS
+  - unique_name: web_sales_Fulfilling_Warehouse
+    from:
+      dataset: web_sales
+      join_columns:
+        - ws_warehouse_sk
+    to:
+      dimension: Fulfilling Warehouse
+      level: Fulfilling Warehouse
+  - unique_name: web_sales_Time_Dimension_Sold
+    from:
+      dataset: web_sales
+      join_columns:
+        - ws_sold_time_sk
+    role_play: Sold {0}
+    to:
+      dimension: Time Dimension
+      level: Time
+  - unique_name: web_sales_Promotions
+    from:
+      dataset: web_sales
+      join_columns:
+        - ws_promo_sk
+    to:
+      dimension: Promotions
+      level: Promotions
+  - unique_name: web_sales_Customer_Address_Sold
+    from:
+      dataset: web_sales
+      join_columns:
+        - ws_bill_addr_sk
+    role_play: Sold {0}
+    to:
+      dimension: Customer Address
+      level: Customer Address
+  - unique_name: web_sales_Customer_Address
+    from:
+      dataset: web_sales
+      join_columns:
+        - ws_ship_addr_sk
+    to:
+      dimension: Customer Address
+      level: Customer Address
+  - unique_name: web_sales_Date_Dimension_Sold_1
+    from:
+      dataset: web_sales
+      join_columns:
+        - ws_sold_date_sk
+    role_play: Sold {0}
+    to:
+      dimension: Date Dimension - TPC-DS
+      level: Time Dimension
+  - unique_name: web_sales_Date_Dimension_Ship_1
+    from:
+      dataset: web_sales
+      join_columns:
+        - ws_ship_date_sk
+    role_play: Ship {0}
+    to:
+      dimension: Date Dimension - TPC-DS
+      level: Time Dimension
+  - unique_name: web_sales_Customer_Demographics
+    from:
+      dataset: web_sales
+      join_columns:
+        - ws_bill_cdemo_sk
+    to:
+      dimension: Customer Demographics
+      level: Customer Demographics
+  - unique_name: web_sales_Ship_Mode
+    from:
+      dataset: web_sales
+      join_columns:
+        - ws_ship_mode_sk
+    to:
+      dimension: Ship Mode
+      level: Ship Mode
+  - unique_name: web_sales_Household_Demographics
+    from:
+      dataset: web_sales
+      join_columns:
+        - ws_bill_hdemo_sk
+    to:
+      dimension: Household Demographics
+      level: Household Demographics
+  - unique_name: web_sales_Customer_Dimension
+    from:
+      dataset: web_sales
+      join_columns:
+        - ws_bill_customer_sk
+    to:
+      dimension: Customer Dimension - TPC-DS
+      level: Customer Dimension - TPC-DS
+  - unique_name: web_sales_Product_Dimension
+    from:
+      dataset: web_sales
+      join_columns:
+        - ws_item_sk
+    to:
+      dimension: Product Dimension - TPC-DS
+      level: Product Dimension - TPC-DS

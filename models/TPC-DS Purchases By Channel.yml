@@ -1,0 +1,32 @@
+unique_name: TPC-DS Purchases By Channel
+object_type: model
+label: TPC-DS Purchases By Channel
+dimensions:
+  - Catalog_Preferred
+include_default_drillthrough: true
+metrics:
+    []
+partitions:
+  - unique_name: TPC-DS Benchmark Model.Date Dimension - TPC-DS.Calendar Year.partition
+    attribute: Calendar Year
+    dimension: Date Dimension - TPC-DS
+    relationships_path:
+      - store_sales_Date_Dimension_Sold_1
+    type: key
+  - unique_name: >-
+      TPC-DS Benchmark Model.Date Dimension - TPC-DS.Calendar
+      Year-Week.partition
+    attribute: Calendar Year-Week
+    dimension: Date Dimension - TPC-DS
+    relationships_path:
+      - store_sales_Date_Dimension_Sold
+    type: key
+relationships:
+  - unique_name: purchase_by_channel_Customer_Dimension
+    from:
+      dataset: purchase_by_channel
+      join_columns:
+        - customer_sk
+    to:
+      dimension: Customer Dimension - TPC-DS
+      level: Customer Dimension - TPC-DS

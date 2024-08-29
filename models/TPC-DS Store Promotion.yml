@@ -1,0 +1,106 @@
+unique_name: TPC-DS Store Promotion
+object_type: model
+label: TPC-DS Store Promotion
+dimensions: []
+include_default_drillthrough: true
+metrics:
+  - unique_name: m_ss_ext_sales_price_promotion
+    folder: Store Sales Measures
+partitions:
+  - unique_name: TPC-DS Benchmark Model.Date Dimension - TPC-DS.Calendar Year.partition
+    attribute: Calendar Year
+    dimension: Date Dimension - TPC-DS
+    relationships_path:
+      - store_sales_Date_Dimension_Sold_1
+    type: key
+  - unique_name: >-
+      TPC-DS Benchmark Model.Date Dimension - TPC-DS.Calendar
+      Year-Week.partition
+    attribute: Calendar Year-Week
+    dimension: Date Dimension - TPC-DS
+    relationships_path:
+      - store_sales_Date_Dimension_Sold
+    type: key
+relationships:
+  - unique_name: store_promotion_Store_Dimension
+    from:
+      dataset: store_promotion
+      join_columns:
+        - ss_store_sk
+    to:
+      dimension: Store Dimension
+      level: Store Dimension
+  - unique_name: store_promotion_Date_Dimension_Sold
+    from:
+      dataset: store_promotion
+      join_columns:
+        - ss_sold_date_sk
+    role_play: Sold {0}
+    to:
+      dimension: Date Dimension - TPC-DS
+      level: Date Week Hierarchy - TPC-DS
+  - unique_name: store_promotion_Promotions
+    from:
+      dataset: store_promotion
+      join_columns:
+        - p_promo_sk
+    to:
+      dimension: Promotions
+      level: Promotions
+  - unique_name: store_promotion_Customer_Address
+    from:
+      dataset: store_promotion
+      join_columns:
+        - ss_addr_sk
+    to:
+      dimension: Customer Address
+      level: Customer Address
+  - unique_name: store_promotion_Date_Dimension_Sold_1
+    from:
+      dataset: store_promotion
+      join_columns:
+        - ss_sold_date_sk
+    role_play: Sold {0}
+    to:
+      dimension: Date Dimension - TPC-DS
+      level: Time Dimension
+  - unique_name: store_promotion_Customer_Demographics
+    from:
+      dataset: store_promotion
+      join_columns:
+        - ss_cdemo_sk
+    to:
+      dimension: Customer Demographics
+      level: Customer Demographics
+  - unique_name: store_promotion_Household_Demographics
+    from:
+      dataset: store_promotion
+      join_columns:
+        - ss_hdemo_sk
+    to:
+      dimension: Household Demographics
+      level: Household Demographics
+  - unique_name: store_promotion_Customer_Dimension
+    from:
+      dataset: store_promotion
+      join_columns:
+        - ss_customer_sk
+    to:
+      dimension: Customer Dimension - TPC-DS
+      level: Customer Dimension - TPC-DS
+  - unique_name: store_promotion_Product_Dimension
+    from:
+      dataset: store_promotion
+      join_columns:
+        - p_item_sk
+    to:
+      dimension: Product Dimension - TPC-DS
+      level: Product Dimension - TPC-DS
+  - unique_name: store_promotion_Product_Dimension_1
+    from:
+      dataset: store_promotion
+      join_columns:
+        - ss_item_sk
+    to:
+      dimension: Product Dimension - TPC-DS
+      level: Product Dimension - TPC-DS

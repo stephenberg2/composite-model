@@ -1,0 +1,181 @@
+unique_name: TPC-DS Catalog Sales
+object_type: model
+label: TPC-DS Catalog Sales
+dimensions:
+  - Catalog_Sales_Price_Tier
+include_default_drillthrough: true
+metrics:
+  - unique_name: m_catalog_sales_coupon_amount_avg
+    folder: Catalog Sales Measures
+  - unique_name: m_catalog_sales_list_price_avg
+    folder: Catalog Sales Measures
+  - unique_name: m_catalog_sales_net_paid_sum
+    folder: Catalog Sales Measures
+  - unique_name: m_catalog_sales_quantity_sold_avg
+    folder: Catalog Sales Measures
+  - unique_name: m_catalog_sales_sales_price_avg
+    folder: Catalog Sales Measures
+  - unique_name: m_catalog_sales_sum
+    folder: Catalog Sales Measures
+  - unique_name: m_cs row counter_sum
+    folder: Catalog Sales Measures
+  - unique_name: m_cs_bill_customer_sk_count
+    folder: Customer Information
+  - unique_name: m_cs_ext_discount_amt_sum
+    folder: Catalog Sales Measures
+  - unique_name: m_cs_ext_list_price_sum
+    folder: Catalog Sales Measures
+  - unique_name: m_cs_ext_sales_price_sum
+    folder: Catalog Sales Measures
+  - unique_name: m_cs_ext_tax_sum
+    folder: Catalog Sales Measures
+  - unique_name: m_cs_ext_wholesale_cost_sum
+    folder: Catalog Sales Measures
+  - unique_name: m_cs_net_paid_inc_tax_sum
+    folder: Catalog Sales Measures
+  - unique_name: m_cs_net_paid_sum
+    folder: Catalog Sales Measures
+  - unique_name: m_cs_net_profit_sum
+    folder: Catalog Sales Measures
+  - unique_name: m_cs_quantity_sum
+    folder: Catalog Sales Measures
+  - unique_name: m_cs_sales_price_sum
+    folder: Catalog Sales Measures
+  - unique_name: m_purchased_amount_in_catalog
+    folder: Catalog Sales Measures
+  - unique_name: Average Catalog Unit Net Profit
+    folder: Catalog Sales Measures
+partitions:
+  - unique_name: TPC-DS Benchmark Model.Date Dimension - TPC-DS.Calendar Year.partition
+    attribute: Calendar Year
+    dimension: Date Dimension - TPC-DS
+    relationships_path:
+      - store_sales_Date_Dimension_Sold_1
+    type: key
+  - unique_name: >-
+      TPC-DS Benchmark Model.Date Dimension - TPC-DS.Calendar
+      Year-Week.partition
+    attribute: Calendar Year-Week
+    dimension: Date Dimension - TPC-DS
+    relationships_path:
+      - store_sales_Date_Dimension_Sold
+    type: key
+relationships:
+  - unique_name: catalog_sales_Date_Dimension_Sold
+    from:
+      dataset: catalog_sales
+      join_columns:
+        - cs_sold_date_sk
+    role_play: Sold {0}
+    to:
+      dimension: Date Dimension - TPC-DS
+      level: Date Week Hierarchy - TPC-DS
+  - unique_name: catalog_sales_Date_Dimension_Ship
+    from:
+      dataset: catalog_sales
+      join_columns:
+        - cs_ship_date_sk
+    role_play: Ship {0}
+    to:
+      dimension: Date Dimension - TPC-DS
+      level: Date Week Hierarchy - TPC-DS
+  - unique_name: catalog_sales_Fulfilling_Warehouse
+    from:
+      dataset: catalog_sales
+      join_columns:
+        - cs_warehouse_sk
+    to:
+      dimension: Fulfilling Warehouse
+      level: Fulfilling Warehouse
+  - unique_name: catalog_sales_Time_Dimension_Sold
+    from:
+      dataset: catalog_sales
+      join_columns:
+        - cs_sold_time_sk
+    role_play: Sold {0}
+    to:
+      dimension: Time Dimension
+      level: Time
+  - unique_name: catalog_sales_Promotions
+    from:
+      dataset: catalog_sales
+      join_columns:
+        - cs_promo_sk
+    to:
+      dimension: Promotions
+      level: Promotions
+  - unique_name: catalog_sales_Customer_Address_Sold
+    from:
+      dataset: catalog_sales
+      join_columns:
+        - cs_bill_addr_sk
+    role_play: Sold {0}
+    to:
+      dimension: Customer Address
+      level: Customer Address
+  - unique_name: catalog_sales_Customer_Address
+    from:
+      dataset: catalog_sales
+      join_columns:
+        - cs_ship_addr_sk
+    to:
+      dimension: Customer Address
+      level: Customer Address
+  - unique_name: catalog_sales_Date_Dimension_Sold_1
+    from:
+      dataset: catalog_sales
+      join_columns:
+        - cs_sold_date_sk
+    role_play: Sold {0}
+    to:
+      dimension: Date Dimension - TPC-DS
+      level: Time Dimension
+  - unique_name: catalog_sales_Date_Dimension_Ship_1
+    from:
+      dataset: catalog_sales
+      join_columns:
+        - cs_ship_date_sk
+    role_play: Ship {0}
+    to:
+      dimension: Date Dimension - TPC-DS
+      level: Time Dimension
+  - unique_name: catalog_sales_Customer_Demographics
+    from:
+      dataset: catalog_sales
+      join_columns:
+        - cs_bill_cdemo_sk
+    to:
+      dimension: Customer Demographics
+      level: Customer Demographics
+  - unique_name: catalog_sales_Ship_Mode
+    from:
+      dataset: catalog_sales
+      join_columns:
+        - cs_ship_mode_sk
+    to:
+      dimension: Ship Mode
+      level: Ship Mode
+  - unique_name: catalog_sales_Household_Demographics
+    from:
+      dataset: catalog_sales
+      join_columns:
+        - cs_ship_customer_sk
+    to:
+      dimension: Household Demographics
+      level: Household Demographics
+  - unique_name: catalog_sales_Customer_Dimension
+    from:
+      dataset: catalog_sales
+      join_columns:
+        - cs_bill_customer_sk
+    to:
+      dimension: Customer Dimension - TPC-DS
+      level: Customer Dimension - TPC-DS
+  - unique_name: catalog_sales_Product_Dimension
+    from:
+      dataset: catalog_sales
+      join_columns:
+        - cs_item_sk
+    to:
+      dimension: Product Dimension - TPC-DS
+      level: Product Dimension - TPC-DS

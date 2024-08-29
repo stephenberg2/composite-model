@@ -1,0 +1,59 @@
+unique_name: TPC-DS Inventory
+object_type: model
+label: TPC-DS Inventory
+dimensions: []
+include_default_drillthrough: true
+metrics:
+  - unique_name: m_inventory_quantity_on_hand_sum
+    folder: Inventory
+ 
+partitions:
+  - unique_name: TPC-DS Benchmark Model.Date Dimension - TPC-DS.Calendar Year.partition
+    attribute: Calendar Year
+    dimension: Date Dimension - TPC-DS
+    relationships_path:
+      - store_sales_Date_Dimension_Sold_1
+    type: key
+  - unique_name: >-
+      TPC-DS Benchmark Model.Date Dimension - TPC-DS.Calendar
+      Year-Week.partition
+    attribute: Calendar Year-Week
+    dimension: Date Dimension - TPC-DS
+    relationships_path:
+      - store_sales_Date_Dimension_Sold
+    type: key
+relationships:
+  - unique_name: inventory_Date_Dimension_Inventory
+    from:
+      dataset: inventory
+      join_columns:
+        - inv_date_sk
+    role_play: Inventory {0}
+    to:
+      dimension: Date Dimension - TPC-DS
+      level: Date Week Hierarchy - TPC-DS
+  - unique_name: inventory_Fulfilling_Warehouse
+    from:
+      dataset: inventory
+      join_columns:
+        - inv_warehouse_sk
+    to:
+      dimension: Fulfilling Warehouse
+      level: Fulfilling Warehouse
+  - unique_name: inventory_Date_Dimension_Inventory_1
+    from:
+      dataset: inventory
+      join_columns:
+        - inv_date_sk
+    role_play: Inventory {0}
+    to:
+      dimension: Date Dimension - TPC-DS
+      level: Time Dimension
+  - unique_name: inventory_Product_Dimension
+    from:
+      dataset: inventory
+      join_columns:
+        - inv_item_sk
+    to:
+      dimension: Product Dimension - TPC-DS
+      level: Product Dimension - TPC-DS

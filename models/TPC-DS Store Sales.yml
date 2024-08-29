@@ -1,0 +1,149 @@
+unique_name: TPC-DS Store Sales
+object_type: model
+label: TPC-DS Store Sales
+dimensions:
+  - Net_Profit_Tier
+  - Sales_Price_Tier
+  - Ss_Ticket_Number
+include_default_drillthrough: true
+metrics:
+  - unique_name: m_purchased_amount_in_store
+    folder: Store Sales Measures
+  - unique_name: m_ss row counter_sum
+    folder: Store Sales Measures
+  - unique_name: m_ss_coupon_amt_avg
+    folder: Store Sales Measures
+  - unique_name: m_ss_customer_sk_count
+    folder: Customer Information
+  - unique_name: m_ss_ext_discount_amt_sum
+    folder: Store Sales Measures
+  - unique_name: m_ss_ext_list_price_sum
+    folder: Store Sales Measures
+  - unique_name: m_ss_ext_sales_price_avg
+    folder: Store Sales Measures
+  - unique_name: m_ss_ext_sales_price_sum
+    folder: Store Sales Measures
+  - unique_name: m_ss_ext_tax_sum
+    folder: Store Sales Measures
+  - unique_name: m_ss_ext_wholesale_cost_avg
+    folder: Store Sales Measures
+  - unique_name: m_ss_ext_wholesale_cost_sum
+    folder: Store Sales Measures
+  - unique_name: m_ss_list_price_avg
+    folder: Store Sales Measures
+  - unique_name: m_ss_net_paid_inc_tax_sum
+    folder: Store Sales Measures
+  - unique_name: m_ss_net_paid_sum
+    folder: Store Sales Measures
+  - unique_name: m_ss_net_profit_sum
+    folder: Store Sales Measures
+  - unique_name: m_ss_quantity_avg
+    folder: Store Sales Measures
+  - unique_name: m_ss_quantity_sum
+    folder: Store Sales Measures
+  - unique_name: m_ss_sales_price_avg
+    folder: Store Sales Measures
+  - unique_name: m_store_coupon_amt_sum
+    folder: Store Sales Measures
+  - unique_name: m_store_sales_price
+    folder: Store Sales Measures
+partitions:
+  - unique_name: TPC-DS Benchmark Model.Date Dimension - TPC-DS.Calendar Year.partition
+    attribute: Calendar Year
+    dimension: Date Dimension - TPC-DS
+    relationships_path:
+      - store_sales_Date_Dimension_Sold_1
+    type: key
+  - unique_name: >-
+      TPC-DS Benchmark Model.Date Dimension - TPC-DS.Calendar
+      Year-Week.partition
+    attribute: Calendar Year-Week
+    dimension: Date Dimension - TPC-DS
+    relationships_path:
+      - store_sales_Date_Dimension_Sold
+    type: key
+relationships:
+  - unique_name: store_sales_Store_Dimension
+    from:
+      dataset: store_sales
+      join_columns:
+        - ss_store_sk
+    to:
+      dimension: Store Dimension
+      level: Store Dimension
+  - unique_name: store_sales_Date_Dimension_Sold
+    from:
+      dataset: store_sales
+      join_columns:
+        - ss_sold_date_sk
+    role_play: Sold {0}
+    to:
+      dimension: Date Dimension - TPC-DS
+      level: Date Week Hierarchy - TPC-DS
+  - unique_name: store_sales_Time_Dimension_Sold
+    from:
+      dataset: store_sales
+      join_columns:
+        - ss_sold_time_sk
+    role_play: Sold {0}
+    to:
+      dimension: Time Dimension
+      level: Time
+  - unique_name: store_sales_Promotions
+    from:
+      dataset: store_sales
+      join_columns:
+        - ss_promo_sk
+    to:
+      dimension: Promotions
+      level: Promotions
+  - unique_name: store_sales_Customer_Address_Sold
+    from:
+      dataset: store_sales
+      join_columns:
+        - ss_addr_sk
+    role_play: Sold {0}
+    to:
+      dimension: Customer Address
+      level: Customer Address
+  - unique_name: store_sales_Date_Dimension_Sold_1
+    from:
+      dataset: store_sales
+      join_columns:
+        - ss_sold_date_sk
+    role_play: Sold {0}
+    to:
+      dimension: Date Dimension - TPC-DS
+      level: Time Dimension
+  - unique_name: store_sales_Customer_Demographics
+    from:
+      dataset: store_sales
+      join_columns:
+        - ss_cdemo_sk
+    to:
+      dimension: Customer Demographics
+      level: Customer Demographics
+  - unique_name: store_sales_Household_Demographics
+    from:
+      dataset: store_sales
+      join_columns:
+        - ss_hdemo_sk
+    to:
+      dimension: Household Demographics
+      level: Household Demographics
+  - unique_name: store_sales_Customer_Dimension
+    from:
+      dataset: store_sales
+      join_columns:
+        - ss_customer_sk
+    to:
+      dimension: Customer Dimension - TPC-DS
+      level: Customer Dimension - TPC-DS
+  - unique_name: store_sales_Product_Dimension
+    from:
+      dataset: store_sales
+      join_columns:
+        - ss_item_sk
+    to:
+      dimension: Product Dimension - TPC-DS
+      level: Product Dimension - TPC-DS
