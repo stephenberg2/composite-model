@@ -5,7 +5,7 @@ dimensions:
   - Catalog_Preferred
 include_default_drillthrough: true
 metrics:
-    []
+  - unique_name: m_purchase_by_channel_sold_year_sum
 partitions:
   - unique_name: TPC-DS Benchmark Model.Date Dimension - TPC-DS.Calendar Year.partition
     attribute: Calendar Year
