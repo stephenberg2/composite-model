@@ -9,10 +9,10 @@ models:
   - TPC-DS Store Sales
   - TPC-DS Web Sales
 
-metric_calc:
+metrics:
   - unique_name: Store and Web Purchased Amount
-    folder: Time Relative
+    folder: composite metrics
   - unique_name: Catalog Purchased Amount Growth
-    folder: Time Relative
+    folder: composite metrics
   - unique_name: m_ws_cs_ext_sales_price_sum
-    folder: Time Relative
+    folder: composite metrics
